@@ -4,8 +4,12 @@ on:
     branches:
       - master
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  build-and-deploy:     #job_id，作业的唯一标识符
+    name: Build and deploy    #job_name，作业在github上显示的名称
+    # needs: job_id     #当前job 执行所依赖的 job
+    runs-on: ubuntu-latest      #当前job 运行的环境要求, 可以是 windows-latest, ubuntu-latest, macos-latest
+    # evn: 定义job运行所依赖的环境变量
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
@@ -15,6 +19,11 @@ jobs:
       run: |
         npm install
         npm run-script build
+    - name: Print env
+      run: |
+        echo $PATH
+        pwd
+      shell: bash
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
