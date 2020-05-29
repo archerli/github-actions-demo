@@ -25,9 +25,18 @@ jobs:
         pwd
         ls -la
       shell: bash
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+    - name: Deploy to wxapp1
+      uses: burnett01/rsync-deployments@4.0
       with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build
+        switches: -avzr --delete
+        path: build/
+        remote_path: /home/jingou/test/.
+        remote_host: wxapp1.xhl365.cn
+        remote_user: jingou
+        remote_key: ${{ secrets.SERVER_SSH_KEY }}
+    # - name: Deploy
+    #   uses: JamesIves/github-pages-deploy-action@releases/v3
+    #   with:
+    #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+    #     BRANCH: gh-pages
+    #     FOLDER: build
