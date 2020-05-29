@@ -25,7 +25,7 @@ jobs:
         pwd
         ls -la
       shell: bash
-    - name: Deploy to wxapp1
+    - name: Deploy to wxapp1.
       uses: burnett01/rsync-deployments@4.0
       with:
         switches: -avzr --delete
