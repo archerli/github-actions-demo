@@ -8,6 +8,7 @@ jobs:
     name: Build and deploy    #job_name，作业在github上显示的名称
     # needs: job_id     #当前job 执行所依赖的 job
     runs-on: ubuntu-latest      #当前job 运行的环境要求, 可以是 windows-latest, ubuntu-latest, macos-latest
+    if: github.event.repository.owner.id == github.event.sender.id
     # evn: 定义job运行所依赖的环境变量
     
     steps:
@@ -25,18 +26,18 @@ jobs:
         pwd
         ls -la
       shell: bash
-    - name: Deploy to wxapp1.
-      uses: burnett01/rsync-deployments@4.0
+#     - name: Deploy to wxapp1.
+#       uses: burnett01/rsync-deployments@4.0
+#       with:
+#         switches: -avzr --delete
+#         path: build/
+#         remote_path: /home/jingou/test/.
+#         remote_host: wxapp1.xhl365.cn
+#         remote_user: jingou
+#         remote_key: ${{ secrets.SERVER_SSH_KEY }}
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        switches: -avzr --delete
-        path: build/
-        remote_path: /home/jingou/test/.
-        remote_host: wxapp1.xhl365.cn
-        remote_user: jingou
-        remote_key: ${{ secrets.SERVER_SSH_KEY }}
-    # - name: Deploy
-    #   uses: JamesIves/github-pages-deploy-action@releases/v3
-    #   with:
-    #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-    #     BRANCH: gh-pages
-    #     FOLDER: build
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: build
